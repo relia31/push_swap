@@ -1,6 +1,14 @@
 #include "push_swap.h"
 
-
+// Fonction pour afficher la pile (utile pour le debug)
+void print_stack(t_stack *stack)
+{
+    while (stack)
+    {
+        printf("%d\n", stack->value);
+        stack = stack->next;
+    }
+}
 
 
 // Vérifie si un caractère est un chiffre
@@ -39,7 +47,7 @@ t_stack	*args_to_list(int argc, char **argv)
 	while (i < argc)
 	{
 		num = ft_atoi(argv[i]); // Convertir l'argument en entier
-		printf("Conversion de %s en %d\n", argv[i], num);
+		//printf("Conversion de %s en %d\n", argv[i], num);
 		if (!is_valid_number(argv[i])) // Vérifier si c'est un nombre valide
 		{
 			ft_lstclear(&head, del);  // Libérer toute la liste si erreur
@@ -52,7 +60,7 @@ t_stack	*args_to_list(int argc, char **argv)
 			return (NULL);
 		}
 		ft_lstadd_back(&head, new_node); // Ajouter à la liste
-		printf("Ajout de %d à la liste\n", num);
+		//printf("Ajout de %d à la liste\n", num);
 
 		i++;
 	}
@@ -86,21 +94,25 @@ int	check_doublon(t_stack *head)
 
 int	main(int argc, char **argv)
 {
-	// On crée la liste à partir des arguments
-	t_stack *list = args_to_list(argc, argv);
+	// crée la liste à partir des arguments
+	t_stack *a = args_to_list(argc, argv);
 
-	// Vérifier si des doublons existent dans la liste
-	if (check_doublon(list))
+	// Vérifie si des doublons dans la liste
+	if (check_doublon(a))
 	{
 		write(2, "Error: Duplicate numbers\n", 25);
-		ft_lstclear(&list, del);  // Libère toute la liste si doublon
+		ft_lstclear(&a, del);  // Libère liste si doublon
 		return (1);
 	}
 
 	write(1, "Arguments valides\n", 18);
 
+	// Afficher la pile a pour vérifier
+    printf("Pile a :\n");
+    print_stack(a);
+
 	// Libérer toute la liste après utilisation
-	ft_lstclear(&list, del);
+	ft_lstclear(&a, del);
 
 	return (0);
 }
