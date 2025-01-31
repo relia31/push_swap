@@ -1,14 +1,33 @@
 #include "push_swap.h"
 
-// Fonction pour afficher la pile (utile pour le debug)
-void print_stack(t_stack *stack)
+// Fonction pour afficher les pile (utile pour le debug)
+void print_stacks(t_stack *a, t_stack *b)
 {
-    while (stack)
+    printf("Pile A     | Pile B\n");
+    printf("----------------------\n");
+
+    while (a || b)
     {
-        printf("%d\n", stack->value);
-        stack = stack->next;
+        if (a)
+        {
+            printf("%-10d", a->value);
+            a = a->next;
+        }
+        else
+            printf("           "); // Espace si la pile A est vide
+
+        printf("| ");
+
+        if (b)
+        {
+            printf("%d\n", b->value);
+            b = b->next;
+        }
+        else
+            printf("\n"); // Nouvelle ligne si la pile B est vide
     }
 }
+
 
 
 // Vérifie si un caractère est un chiffre
@@ -96,6 +115,7 @@ int	main(int argc, char **argv)
 {
 	// crée la liste à partir des arguments
 	t_stack *a = args_to_list(argc, argv);
+	t_stack *b = NULL;
 
 	// Vérifie si des doublons dans la liste
 	if (check_doublon(a))
@@ -108,11 +128,21 @@ int	main(int argc, char **argv)
 	write(1, "Arguments valides\n", 18);
 
 	// Afficher la pile a pour vérifier
-    printf("Pile a :\n");
-    print_stack(a);
+    //printf("Pile a :\n");
+    print_stacks(a, b);
+	//sa(a);
+
+	push(&a, &b);
+	push(&a, &b);
+	push(&a, &b);
+	push(&b, &a);
+
+	printf("%s\n", "aprés push");
+	print_stacks(a, b);
 
 	// Libérer toute la liste après utilisation
 	ft_lstclear(&a, del);
+	ft_lstclear(&b, del);
 
 	return (0);
 }

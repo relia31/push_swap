@@ -78,3 +78,11 @@ Notes
     srcs/sorting/ → Pour les algorithmes de tri
         small_sort.c → Tri des petites listes (ex : 3 ou 5 nombres)
         big_sort.c → Algorithme principal pour les grandes listes
+
+
+
+
+
+        ____________________________________________________
+
+note **a : quand on modifie une liste chaînée, on passe un pointeur sur pointeur pour bien garder la modification.
