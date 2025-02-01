@@ -1,4 +1,5 @@
 #include "push_swap.h"
+#include <string.h>
 
 // Fonction pour afficher les pile (utile pour le debug)
 void print_stacks(t_stack *a, t_stack *b)
@@ -109,40 +110,91 @@ int	check_doublon(t_stack *head)
 	return (0); // Pas de doublon
 }
 
+void sort_stack(t_stack **a, t_stack **b)
+{
+    if (stack_size(*a) == 2)
+        sa(*a);  // Corrigé : on passe *a au lieu de a
+    else if (stack_size(*a) == 3)
+        small_sort(a);
+    else
+        radix_sort(a, b);
+}
+
+
+
+// int	main(int argc, char **argv)
+// {
+// 	// crée la liste à partir des arguments
+// 	t_stack *a = args_to_list(argc, argv);
+// 	t_stack *b = NULL;
+
+// 	// Vérifie si des doublons dans la liste
+// 	if (check_doublon(a))
+// 	{
+// 		write(2, "Error: Duplicate numbers\n", 25);
+// 		ft_lstclear(&a, del);  // Libère liste si doublon
+// 		return (1);
+// 	}
+
+// 	write(1, "Arguments valides\n", 18);
+
+//     printf("Avant :\n");
+//    	print_stacks(a, b);
+
+//     // if (argc > 2)
+//     // {
+//     //    char *cmd = argv[argc - 1];
+
+// 	// 	if (strcmp(cmd, "ra") == 0)
+// 	// 		ra(&a);
+// 	// 	else if (strcmp(cmd, "rb") == 0 && b != NULL)  // Vérifie si B existe
+// 	// 		rb(&b);
+// 	// 	else if (strcmp(cmd, "rra") == 0)
+// 	// 		rra(&a);
+// 	// 	else if (strcmp(cmd, "rrb") == 0 && b != NULL)
+// 	// 		rrb(&b);
+// 	// 	else
+// 	// 		printf("Commande non reconnue.\n");
+// 	// }
+
+//     printf("Après :\n");
+// 	//ra(&a);
+// 	pb(&a, &b);
+// 	rb(&b);
+	
+// 	rra(&a);
+// 	print_stacks(a, b);
+
+// 	// Libérer toute la liste après utilisation
+// 	ft_lstclear(&a, del);
+// 	ft_lstclear(&b, del);
+
+// 	return (0);
+// }
 
 
 int	main(int argc, char **argv)
 {
-	// crée la liste à partir des arguments
-	t_stack *a = args_to_list(argc, argv);
+	t_stack *a;
 	t_stack *b = NULL;
 
-	// Vérifie si des doublons dans la liste
-	if (check_doublon(a))
+	if (argc < 2)
+		return (1);
+
+	// Convertir les arguments en liste chaînée
+	a = args_to_list(argc, argv);
+	if (!a || check_doublon(a))
 	{
-		write(2, "Error: Duplicate numbers\n", 25);
-		ft_lstclear(&a, del);  // Libère liste si doublon
+		write(2, "Error\n", 6);
+		ft_lstclear(&a, del);
 		return (1);
 	}
 
-	write(1, "Arguments valides\n", 18);
+	// Exécuter l'algorithme de tri
+	sort_stack(&a, &b);
 
-	// Afficher la pile a pour vérifier
-    //printf("Pile a :\n");
-    print_stacks(a, b);
-	//sa(a);
-
-	push(&a, &b);
-	push(&a, &b);
-	push(&a, &b);
-	push(&b, &a);
-
-	printf("%s\n", "aprés push");
-	print_stacks(a, b);
-
-	// Libérer toute la liste après utilisation
+	// Libérer la mémoire
 	ft_lstclear(&a, del);
 	ft_lstclear(&b, del);
-
 	return (0);
 }

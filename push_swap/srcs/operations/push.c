@@ -16,3 +16,14 @@ void    push(t_stack **src, t_stack **dest)
     top->next = *dest;     // Place l'élément retiré au début de dest
     *dest = top;
 }
+
+
+void    pa(t_stack **b, t_stack **a)
+{
+    push(b, a);
+}
+
+void    pb(t_stack **a, t_stack **b)
+{
+    push(a, b);
+}

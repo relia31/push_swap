@@ -5,14 +5,39 @@
 
 
 
-void    rotate(t_stack *list)
+void rotate(t_stack **list)
 {
-    t_stack *current = list;
+    if (!list || !*list || !(*list)->next)
+        return;
 
-    while(current && current->prev != NULL)
-    {
-        list = current->prev;
-        current->next;
-    }
-    
+    t_stack *first = *list;
+    t_stack *last = *list;
+
+    // Aller au dernier élément
+    while (last->next)
+        last = last->next;
+
+    // Mettre le premier élément à la fin
+    *list = first->next;
+    (*list)->prev = NULL;
+    last->next = first;
+    first->prev = last;
+    first->next = NULL;
+}
+
+
+void    ra(t_stack **a)
+{
+    rotate(a);
+}
+
+void    rb(t_stack **b)
+{
+    rotate(b);
+}
+
+void    rr(t_stack **a, t_stack **b)
+{
+    rotate(a);
+    rotate(b);
 }
